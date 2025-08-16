@@ -1,0 +1,233 @@
+﻿<Window x:Class="Sample.Window1"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:wf="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
+        Title="Reports.net プロフェッショナル" Height="955" Width="1000" 
+        WindowStartupLocation="CenterScreen"
+        Background="#F5F7FA">
+    
+    <Window.Resources>
+        
+        <!-- スタイル定義 -->
+        <Style x:Key="RadioButtonStyle" TargetType="RadioButton">
+            <Setter Property="Foreground" Value="#2D3748"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Margin" Value="8,4"/>
+            <Setter Property="Padding" Value="10,8"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RadioButton">
+                        <Border x:Name="border" 
+                                Background="#FFFFFF" 
+                                CornerRadius="6" 
+                                BorderThickness="1" 
+                                BorderBrush="#E2E8F0"
+                                Padding="{TemplateBinding Padding}">
+                            <Border.Effect>
+                                <DropShadowEffect ShadowDepth="1" Direction="270" Color="#1A365D" Opacity="0.1" BlurRadius="4"/>
+                            </Border.Effect>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Ellipse x:Name="radioCircle" 
+                                         Width="18" 
+                                         Height="18" 
+                                         StrokeThickness="1.5" 
+                                         Stroke="#4FD1C5" 
+                                         Fill="Transparent" 
+                                         VerticalAlignment="Center"/>
+                                <Ellipse x:Name="radioCheck" 
+                                         Width="10" 
+                                         Height="10" 
+                                         Fill="#4FD1C5" 
+                                         Visibility="Collapsed" 
+                                         VerticalAlignment="Center" 
+                                         HorizontalAlignment="Center"/>
+                                <ContentPresenter Grid.Column="1" 
+                                                  Margin="10,0,0,0" 
+                                                  VerticalAlignment="Center" 
+                                                  HorizontalAlignment="Left" 
+                                                  RecognizesAccessKey="True"/>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="radioCheck" Property="Visibility" Value="Visible"/>
+                                <Setter TargetName="border" Property="Background" Value="#F0FFFF"/>
+                                <Setter TargetName="border" Property="BorderBrush" Value="#4FD1C5"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#F0FFFF"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+        <Style x:Key="ExecuteButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#2B6CB0"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="24,12"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" 
+                                Background="{TemplateBinding Background}" 
+                                CornerRadius="8" 
+                                BorderThickness="{TemplateBinding BorderThickness}" 
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                Padding="{TemplateBinding Padding}">
+                            <Border.Effect>
+                                <DropShadowEffect ShadowDepth="2" Direction="270" Color="#1A365D" Opacity="0.3" BlurRadius="8"/>
+                            </Border.Effect>
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#4299E1"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#2C5282"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+        <Style x:Key="CardStyle" TargetType="Border">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="CornerRadius" Value="12"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#E2E8F0"/>
+            <Setter Property="Padding" Value="20"/>
+            <Setter Property="Margin" Value="0,0,0,16"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect ShadowDepth="2" Direction="270" Color="#1A365D" Opacity="0.1" BlurRadius="8"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+        <Style x:Key="HeaderTextStyle" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="#2D3748"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Margin" Value="0,0,0,16"/>
+        </Style>
+    </Window.Resources>
+    
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <Grid Margin="24">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            
+            <!-- ヘッダーカード -->
+            <Border Grid.Row="0" Style="{StaticResource CardStyle}">
+                <StackPanel>
+                    <TextBlock Text="帳票出力設定" Style="{StaticResource HeaderTextStyle}"/>
+                    
+                    <TextBlock Text="出力形式を選択してください" 
+                               FontSize="14" 
+                               Foreground="#4A5568" 
+                               Margin="0,0,0,12"/>
+                    
+                    <!-- ラジオボタングループ -->
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        
+                        <RadioButton x:Name="radPreview" 
+                                     Content="WPFプレビュー" 
+                                     Grid.Column="0" Grid.Row="0"
+                                     GroupName="MyRadioGroup" 
+                                     Style="{StaticResource RadioButtonStyle}"
+                                     IsChecked="True"/>
+                        
+                        <RadioButton x:Name="radPrint" 
+                                     Content="印刷" 
+                                     Grid.Column="1" Grid.Row="0"
+                                     GroupName="MyRadioGroup" 
+                                     Style="{StaticResource RadioButtonStyle}"/>
+                        
+                        <RadioButton x:Name="radPDF" 
+                                     Content="PDF出力" 
+                                     Grid.Column="2" Grid.Row="0"
+                                     GroupName="MyRadioGroup" 
+                                     Style="{StaticResource RadioButtonStyle}"/>
+                        
+                        <RadioButton x:Name="radGetPrintDocument" 
+                                     Content="独自プレビュー" 
+                                     Grid.Column="0" Grid.Row="1"
+                                     GroupName="MyRadioGroup" 
+                                     Style="{StaticResource RadioButtonStyle}"/>
+                        
+                        <RadioButton x:Name="radSVG" 
+                                     Content="SVG出力" 
+                                     Grid.Column="1" Grid.Row="1"
+                                     GroupName="MyRadioGroup" 
+                                     Style="{StaticResource RadioButtonStyle}"/>
+                        
+                        <RadioButton x:Name="radXPS" 
+                                     Content="XPS出力" 
+                                     Grid.Column="2" Grid.Row="1"
+                                     GroupName="MyRadioGroup" 
+                                     Style="{StaticResource RadioButtonStyle}"/>
+                    </Grid>
+                    
+                    <!-- 実行ボタン -->
+                    <Button Content="実行" 
+                            Style="{StaticResource ExecuteButtonStyle}"
+                            Width="160" 
+                            Margin="0,20,0,0" 
+                            HorizontalAlignment="Center"
+                            Click="Button_Click"/>
+                </StackPanel>
+            </Border>
+            
+            <!-- 情報カード -->
+            <Border Grid.Row="1" Style="{StaticResource CardStyle}" Margin="0,16,0,16">
+                <StackPanel>
+                    <TextBlock FontSize="14" TextWrapping="Wrap" Foreground="#4A5568">
+                        <Run Text="※WPF版プレビューではお客様が自在にプレビュー画面をXAMLで変更できます。"/>
+                        <LineBreak/>
+                        <Run Text="プレビュー画面デザインの変更方法については、"/>
+                        <Hyperlink NavigateUri="https://youtu.be/mFf64CehJEY" 
+                                  RequestNavigate="Hyperlink_RequestNavigate" 
+                                  Foreground="#3182CE">
+                            <Run Text="こちらの動画"/>
+                        </Hyperlink>
+                        <Run Text="をご覧ください。"/>
+                    </TextBlock>
+                </StackPanel>
+            </Border>
+            
+            <!-- プレビューコントロール -->
+            <Border Grid.Row="2" Style="{StaticResource CardStyle}" Margin="0,0,0,0">
+                <Grid x:Name="grdWinPrev" MinHeight="800">
+                    <WindowsFormsHost Name="windowsFormsHost">
+                        <wf:PrintPreviewControl x:Name="prevWinForm" Dock="Fill"/>
+                    </WindowsFormsHost>
+                </Grid>
+            </Border>
+        </Grid>
+    </ScrollViewer>
+</Window>

@@ -1,0 +1,52 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>$(DefineConstants)TRACE,Linux</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DefineConstants>$(DefineConstants)TRACE,Linux</DefineConstants>
+  </PropertyGroup>
+  
+  <!-- .dockerignore が無ければ Docker ビルド用の警告を出しておく -->
+  <Target Name="WarnDockerIgnore" BeforeTargets="Build">
+    <Warning Code="DOCKER001" Condition="!Exists('$(SolutionDir).dockerignore')" Text=".dockerignore が見つかりません。「Dockerイメージのビルド」は失敗しますよ♪" />
+  </Target>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.2" />
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="6.0.2" />
+     <PackageReference Include="Swashbuckle.AspNetCore" Version="9.0.3" />
+   <PackageReference Include="Microsoft.Windows.Compatibility" Version="9.0.4" />
+  </ItemGroup>
+
+  <!--
+	！！！注意！！！
+	プロジェクトのビルドではなく、DockerFile を右クリックで個別にビルドする場合
+	Pao.Reports.Linux.dll がインストールフォルダに配置されていると
+	Pathが遠すぎてビルドに失敗します。(.NET 5/6のバグと思われます。)
+	従ってPao.Reports.Linux.dll等を近いパスにも配置して参照してあります。
+    -->
+  <ItemGroup>
+    <Reference Include="Pao.Reports.Linux">
+      <HintPath>Reports.net.Assembly\Pao.Reports.Linux.dll</HintPath>
+    </Reference>
+    <Reference Include="SixLabors.Fonts">
+      <HintPath>Reports.net.Assembly\SixLabors.Fonts.dll</HintPath>
+    </Reference>
+    <Reference Include="SixLabors.ImageSharp">
+      <HintPath>Reports.net.Assembly\SixLabors.ImageSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="SixLabors.ImageSharp.Drawing">
+      <HintPath>Reports.net.Assembly\SixLabors.ImageSharp.Drawing.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  
+</Project>

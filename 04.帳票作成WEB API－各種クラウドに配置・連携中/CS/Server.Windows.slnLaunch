@@ -1,0 +1,19 @@
+[
+  {
+    "Name": "新しいプロファイル",
+    "Projects": [
+      {
+        "Path": "Server\\Server.Windows.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "Client\\WinForm\\ClientForm.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "Client\\WPF\\ClientWPF.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]

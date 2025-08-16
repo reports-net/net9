@@ -1,0 +1,43 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net9.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+  </PropertyGroup>
+
+  <ItemGroup>
+  <Compile Update="Form1.cs">
+    <SubType>Form</SubType>
+  </Compile>
+  <EmbeddedResource Update="Form1.resx">
+    <DependentUpon>Form1.cs</DependentUpon>
+  </EmbeddedResource>
+</ItemGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.7" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="RestSharp" Version="106.13.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+
+    <!-- Reports.net 本体 -->
+    <Reference Include="Pao.Reports">
+      <HintPath Condition="Exists('$(ProgramFiles)')">$(ProgramFiles)\Pao@Office\Reports.net\Pao.Reports.dll</HintPath>
+      <HintPath Condition="Exists('$(ProgramFiles) (x86)')">$(ProgramFiles) (x86)\Pao@Office\Reports.net\Pao.Reports.dll</HintPath>
+    </Reference>
+
+    <!-- ライセンスチェック用 開発環境のみに必要　運用環境への配布時には不要-->
+    <Reference Include="System.Management">
+      <HintPath Condition="Exists('$(ProgramFiles)')">$(ProgramFiles)\Pao@Office\Reports.net\System.Management.dll</HintPath>
+      <HintPath Condition="Exists('$(ProgramFiles) (x86)')">$(ProgramFiles) (x86)\Pao@Office\Reports.net\System.Management.dll</HintPath>
+    </Reference>
+    <!--以下でもOK
+    <PackageReference Include="System.Management" Version="5以上.0.0" /> -->
+
+  </ItemGroup>
+
+
+</Project>

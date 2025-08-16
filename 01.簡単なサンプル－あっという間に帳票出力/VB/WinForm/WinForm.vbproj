@@ -1,0 +1,36 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net9.0-windows</TargetFramework>
+		<UseWindowsForms>true</UseWindowsForms>
+		<MyType>WindowsForms</MyType>
+	</PropertyGroup>
+
+	<ItemGroup>
+    <!-- プレビューアのアイコン変更のため -->
+    <PackageReference Include="System.Data.OleDb" Version="6.0.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+    <!-- Reports.net 本体 -->
+    <Reference Include="Pao.Reports">
+			<HintPath Condition="Exists('$(ProgramFiles)')">$(ProgramFiles)\Pao@Office\Reports.net\Pao.Reports.dll</HintPath>
+			<HintPath Condition="Exists('$(ProgramFiles) (x86)')">$(ProgramFiles) (x86)\Pao@Office\Reports.net\Pao.Reports.dll</HintPath>
+	  </Reference>
+
+
+    <!-- ライセンスチェック用 開発環境のみに必要　運用環境への配布時には不要-->
+    <Reference Include="System.Management">
+      <HintPath Condition="Exists('$(ProgramFiles)')">$(ProgramFiles)\Pao@Office\Reports.net\System.Management.dll</HintPath>
+      <HintPath Condition="Exists('$(ProgramFiles) (x86)')">$(ProgramFiles) (x86)\Pao@Office\Reports.net\System.Management.dll</HintPath>
+    </Reference>
+    <!--以下でもOK
+    <PackageReference Include="System.Management" Version="5以上.0.0" /> -->
+    
+    <Import Include="System.Drawing" />
+    <Import Include="System.Windows.Forms" />
+  </ItemGroup>
+
+
+
+</Project>

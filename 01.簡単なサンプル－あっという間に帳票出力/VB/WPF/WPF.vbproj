@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0-windows</TargetFramework>
+    <OutputType>WinExe</OutputType>
+    <UseWPF>true</UseWPF>
+    <UseWindowsForms>true</UseWindowsForms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- 印刷プレビューアの埋め込みのため -->
+    <PackageReference Include="System.Drawing.Common" Version="9.0.0" />
+
+    <!-- Reports.net 本体 -->
+    <Reference Include="Pao.Reports">
+      <Name>Pao.Reports</Name>
+      <HintPath Condition="Exists('$(ProgramFiles)')">$(ProgramFiles)\Pao@Office\Reports.net\Pao.Reports.dll</HintPath>
+      <HintPath Condition="Exists('$(ProgramFiles) (x86)')">$(ProgramFiles) (x86)\Pao@Office\Reports.net\Pao.Reports.dll</HintPath>
+      <AssemblyFolderKey>hkcu\dn\pao%40office</AssemblyFolderKey>
+    </Reference>
+
+    <!-- ライセンスチェック用 開発環境のみに必要　運用環境への配布時には不要-->
+    <Reference Include="System.Management">
+      <HintPath Condition="Exists('$(ProgramFiles)')">$(ProgramFiles)\Pao@Office\Reports.net\System.Management.dll</HintPath>
+      <HintPath Condition="Exists('$(ProgramFiles) (x86)')">$(ProgramFiles) (x86)\Pao@Office\Reports.net\System.Management.dll</HintPath>
+    </Reference>
+    <!--以下でもOK
+    <PackageReference Include="System.Management" Version="5以上.0.0" /> -->    
+    
+  </ItemGroup>
+
+</Project>

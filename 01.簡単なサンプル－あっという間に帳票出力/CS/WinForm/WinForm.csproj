@@ -1,0 +1,45 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net9.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWindowsForms>true</UseWindowsForms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Form2.cs" />
+    <Compile Remove="Form3.cs" />
+    <Compile Remove="Form3.Designer.cs" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <!-- デザイナー用のDPI設定 -->
+    <EnableWindowsFormsDesignerHighDpiMode>false</EnableWindowsFormsDesignerHighDpiMode>
+    <!-- アプリケーション全体のDPI設定 -->
+    <ApplicationHighDpiMode>DpiUnaware</ApplicationHighDpiMode>
+    <!-- AutoScalingの無効化 -->
+    <EnableWindowsFormsHighDpiAutoResizing>false</EnableWindowsFormsHighDpiAutoResizing>
+  </PropertyGroup>
+
+
+  <ItemGroup>
+    <EmbeddedResource Remove="Form2.resx" />
+    <EmbeddedResource Remove="Form3.resx" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+
+    <!-- Reports.net 本体 -->
+    <Reference Include="Pao.Reports">
+      <HintPath Condition="Exists('$(ProgramFiles)')">$(ProgramFiles)\Pao@Office\Reports.net\Pao.Reports.dll</HintPath>
+      <HintPath Condition="Exists('$(ProgramFiles) (x86)')">$(ProgramFiles) (x86)\Pao@Office\Reports.net\Pao.Reports.dll</HintPath>
+    </Reference>
+
+    <!-- ライセンスチェック用 開発環境のみに必要　運用環境への配布時には不要-->
+    <!--以下でもOK
+    <PackageReference Include="System.Management" Version="5以上.0.0" /> -->
+
+  </ItemGroup>
+</Project>

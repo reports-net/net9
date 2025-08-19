@@ -34,5 +34,10 @@
     <PackageReference Include="System.Management" Version="5以上.0.0" /> -->
 
   </ItemGroup>
-
+  
+  <ItemGroup Condition="!Exists('$(ProgramFiles)\Pao@Office\Reports.net\Pao.Reports.dll') And !Exists('$(ProgramFiles(x86))\Pao@Office\Reports.net\Pao.Reports.dll')">
+    <!-- DLLが無ければNuGetを利用 -->
+    <PackageReference Include="Reports.net" Version="9.0.0.1" />
+  </ItemGroup>
+  
 </Project>

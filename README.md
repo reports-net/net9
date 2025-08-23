@@ -1,3 +1,11 @@
+## 🚀 クイックスタート
+
+📦 **ZIP ダウンロード**: https://codeload.github.com/reports-net/net9/zip/refs/heads/main  
+📚 **NuGet**: [Reports.net](https://www.nuget.org/packages/Reports.net/) | [Reports.net.Azure](https://www.nuget.org/packages/Reports.net.Azure/) | [Reports.net.Linux](https://www.nuget.org/packages/Reports.net.Linux/)  
+⚡ **使い方**: ZIP展開 → `.sln` を Visual Studio で開く → F5 で実行
+
+---
+
 # Reports.net サンプルプログラム集
 
 > **一つのソリューションで “プレビュー → PDF/XPS/印刷” まで最短ルート**。目的別に 01 〜 05 のサンプルを並べ、段階的に学べる構成にしています。

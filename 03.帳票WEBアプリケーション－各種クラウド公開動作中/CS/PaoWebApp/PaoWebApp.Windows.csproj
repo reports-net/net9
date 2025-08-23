@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>    <Nullable>enable</Nullable>
@@ -37,17 +37,12 @@
     <PackageReference Include="Microsoft.Windows.Compatibility" Version="9.0.4" />
   </ItemGroup>
 
-	<ItemGroup>
-		<Reference Include="Pao.Reports.Azure">
-			<HintPath Condition="Exists('$(ProgramFiles)')">$(ProgramFiles)\Pao@Office\Reports.net\Pao.Reports.Azure.dll</HintPath>
-			<HintPath Condition="Exists('$(ProgramFiles) (x86)')">$(ProgramFiles) (x86)\Pao@Office\Reports.net\Pao.Reports.Azure.dll</HintPath>
-		</Reference>
-	</ItemGroup>
-	
-	  <ItemGroup Condition="!Exists('$(ProgramFiles)\Pao@Office\Reports.net\Pao.Reports.Azure.dll') And !Exists('$(ProgramFiles(x86))\Pao@Office\Reports.net\Pao.Reports.Azure.dll')">
-    	<!-- DLLが無ければNuGetを利用 -->
-    	<PackageReference Include="Reports.net.Azure" Version="9.0.0.1" />
-	  </ItemGroup>
-
+  <ItemGroup>
+    <PackageReference Include="Reports.net.Azure" Version="9.0.0.2" Condition="!Exists('$(ProgramFiles)\Pao@Office\Reports.net\Pao.Reports.dll') And !Exists('$(ProgramFiles(x86))\Pao@Office\Reports.net\Pao.Reports.dll')" />
+    <Reference Include="Pao.Reports.Azure">
+      <HintPath Condition="Exists('$(ProgramFiles)')">$(ProgramFiles)\Pao@Office\Reports.net\Pao.Reports.Azure.dll</HintPath>
+      <HintPath Condition="Exists('$(ProgramFiles) (x86)')">$(ProgramFiles) (x86)\Pao@Office\Reports.net\Pao.Reports.Azure.dll</HintPath>
+    </Reference>
+  </ItemGroup>
 
 </Project>

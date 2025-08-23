@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net5.0-windows</TargetFramework>
     <OutputType>WinExe</OutputType>
@@ -28,6 +28,7 @@
     <StartupObject>Sample.Sample.App</StartupObject>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="Reports.net" Version="9.0.0.2" Condition="!Exists('$(ProgramFiles)\Pao@Office\Reports.net\Pao.Reports.dll') And !Exists('$(ProgramFiles(x86))\Pao@Office\Reports.net\Pao.Reports.dll')" />
     <Reference Include="Pao.Reports">
       <Name>Pao.Reports</Name>
       <HintPath Condition="Exists('$(ProgramFiles)')">$(ProgramFiles)\Pao@Office\Reports.net\Pao.Reports.dll</HintPath>
@@ -35,10 +36,7 @@
       <AssemblyFolderKey>hkcu\dn\pao%40office</AssemblyFolderKey>
     </Reference>
   </ItemGroup>
-  <ItemGroup Condition="!Exists('$(ProgramFiles)\Pao@Office\Reports.net\Pao.Reports.dll') And !Exists('$(ProgramFiles(x86))\Pao@Office\Reports.net\Pao.Reports.dll')">
-    <!-- DLLが無ければNuGetを利用 -->
-    <PackageReference Include="Reports.net" Version="9.0.0.1" />
-  </ItemGroup>
+
   <ItemGroup>
     <Import Include="System.Windows" />
     <Import Include="System.Windows.Controls" />
@@ -51,6 +49,7 @@
     <Import Include="System.Windows.Navigation" />
 
     <!-- ライセンスチェック用 開発環境のみに必要　運用環境への配布時には不要-->
+    <PackageReference Include="System.Management" Version="5.0.0" Condition="!Exists('$(ProgramFiles)\Pao@Office\Reports.net\System.Management.dll') And !Exists('$(ProgramFiles(x86))\Pao@Office\Reports.net\System.Management.dll')" />
     <Reference Include="System.Management">
       <HintPath Condition="Exists('$(ProgramFiles)')">$(ProgramFiles)\Pao@Office\Reports.net\System.Management.dll</HintPath>
       <HintPath Condition="Exists('$(ProgramFiles) (x86)')">$(ProgramFiles) (x86)\Pao@Office\Reports.net\System.Management.dll</HintPath>

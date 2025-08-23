@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
@@ -32,6 +32,7 @@
   <ItemGroup>
 
     <!-- Reports.net 本体 -->
+    <PackageReference Include="Reports.net" Version="9.0.0.2" Condition="!Exists('$(ProgramFiles)\Pao@Office\Reports.net\Pao.Reports.dll') And !Exists('$(ProgramFiles(x86))\Pao@Office\Reports.net\Pao.Reports.dll')" />
     <Reference Include="Pao.Reports">
       <HintPath Condition="Exists('$(ProgramFiles)')">$(ProgramFiles)\Pao@Office\Reports.net\Pao.Reports.dll</HintPath>
       <HintPath Condition="Exists('$(ProgramFiles) (x86)')">$(ProgramFiles) (x86)\Pao@Office\Reports.net\Pao.Reports.dll</HintPath>
@@ -43,9 +44,6 @@
 
   </ItemGroup>
 
-  <ItemGroup Condition="!Exists('$(ProgramFiles)\Pao@Office\Reports.net\Pao.Reports.dll') And !Exists('$(ProgramFiles(x86))\Pao@Office\Reports.net\Pao.Reports.dll')">
-    <!-- DLLが無ければNuGetを利用 -->
-    <PackageReference Include="Reports.net" Version="9.0.0.1" />
-  </ItemGroup>
+
     
 </Project>

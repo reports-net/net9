@@ -1,16 +1,15 @@
-# ---- 言語集計ルール ----
-# C#/VB を明示して最優先に
+# 主役言語を明示
 *.cs linguist-language=C#
-*.vb linguist-language=VB.NET
+*.vb linguist-language=Visual Basic
 
-# Web系アセットは集計から外す（割合を食うのを防ぐ）
+# Web系は集計から外す（割合を食うのを防ぐ）
 *.js linguist-vendored
 *.ts linguist-vendored
 *.css linguist-vendored
 wwwroot/** linguist-vendored
 scripts/** linguist-vendored
 
-# 生成物はカウントしない
+# 自動生成物は除外
 *.min.js linguist-generated
 *.min.css linguist-generated
 package-lock.json linguist-generated

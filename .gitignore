@@ -416,3 +416,5 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+/03.帳票WEBアプリケーション－各種クラウド公開動作中/CS/PaoWebApp/Reports.net.Assembly
+/04.帳票作成WEB API－各種クラウドに配置・連携中/CS/Server/Reports.net.Assembly

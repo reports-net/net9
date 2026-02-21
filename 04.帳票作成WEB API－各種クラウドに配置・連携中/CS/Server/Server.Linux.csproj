@@ -21,13 +21,32 @@
   </Target>
 
   <ItemGroup>
-     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.2" />
-     <PackageReference Include="Microsoft.Data.SqlClient" Version="6.0.2" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.2" />
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="6.0.2" />
      <PackageReference Include="Swashbuckle.AspNetCore" Version="9.0.3" />
-     <PackageReference Include="Microsoft.Windows.Compatibility" Version="9.0.4" />
+   <PackageReference Include="Microsoft.Windows.Compatibility" Version="9.0.4" />
+  </ItemGroup>
 
-    <PackageReference Include="Reports.net.Linux" Version="9.0.0.4" />
-
+  <!--
+	！！！注意！！！
+	プロジェクトのビルドではなく、DockerFile を右クリックで個別にビルドする場合
+	Pao.Reports.Linux.dll がインストールフォルダに配置されていると
+	Pathが遠すぎてビルドに失敗します。(.NET 5/6のバグと思われます。)
+	従ってPao.Reports.Linux.dll等を近いパスにも配置して参照してあります。
+    -->
+  <ItemGroup>
+    <Reference Include="Pao.Reports.Linux">
+      <HintPath>Reports.net.Assembly\Pao.Reports.Linux.dll</HintPath>
+    </Reference>
+    <Reference Include="SixLabors.Fonts">
+      <HintPath>Reports.net.Assembly\SixLabors.Fonts.dll</HintPath>
+    </Reference>
+    <Reference Include="SixLabors.ImageSharp">
+      <HintPath>Reports.net.Assembly\SixLabors.ImageSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="SixLabors.ImageSharp.Drawing">
+      <HintPath>Reports.net.Assembly\SixLabors.ImageSharp.Drawing.dll</HintPath>
+    </Reference>
   </ItemGroup>
   
 </Project>

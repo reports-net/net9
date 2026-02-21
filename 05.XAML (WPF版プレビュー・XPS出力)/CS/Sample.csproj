@@ -7,12 +7,12 @@
     <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Reports.net" Version="9.0.0.4" Condition="!Exists('$(ProgramFiles) (x86)\Pao@Office\Reports.net\Pao.Reports.dll')" />
+<!-- Reports.net 本体 -->
+<!-- インストールフォルダにDLLがなければNuGetパッケージから参照 -->
+<PackageReference Include="Reports.net" Version="5.0.0.*" Condition="!Exists('$(ProgramFiles) (x86)\Pao@Office\Reports.net\Pao.Reports.dll')" />
     <Reference Include="Pao.Reports" Condition="Exists('$(ProgramFiles) (x86)\Pao@Office\Reports.net\Pao.Reports.dll')">
-      <Name>Pao.Reports</Name>
-      <HintPath Condition="Exists('$(ProgramFiles) (x86)')">$(ProgramFiles) (x86)\Pao@Office\Reports.net\Pao.Reports.dll</HintPath>
-      
-    </Reference>
+  <HintPath Condition="Exists('$(ProgramFiles) (x86)')">$(ProgramFiles) (x86)\Pao@Office\Reports.net\Pao.Reports.dll</HintPath>
+</Reference>
   </ItemGroup>
 
 

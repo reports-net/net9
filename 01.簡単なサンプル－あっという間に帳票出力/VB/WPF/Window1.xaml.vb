@@ -145,8 +145,9 @@ Namespace Sample
                 Dim saveFileName As String = ShowSaveDialog("html") ' SVGファイル保存ダイアログ
                 If saveFileName = "" Then Return
 
-                'SVGデータの保存
-                paoRep.SaveSVGFile(saveFileName)
+                ' インラインSVG埋め込みHTML文字列を取得し、ファイルに保存
+                Dim svgHtml As String = paoRep.GetSvg()
+                System.IO.File.WriteAllText(saveFileName, svgHtml, System.Text.Encoding.UTF8)
 
                 OpenSaveFile(saveFileName) ' 保存したSVGファイルを開く
             ElseIf radXPS.IsChecked = True Then 'XPS出力が選択されている場合

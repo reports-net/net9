@@ -21,7 +21,8 @@
 
 
     <!-- Reports.net 本体 -->
-    <PackageReference Include="Reports.net" Version="9.0.0.4" Condition="!Exists('$(ProgramFiles) (x86)\Pao@Office\Reports.net\Pao.Reports.dll')" />
+    <!-- インストールフォルダにDLLがなければNuGetパッケージから参照 -->
+    <PackageReference Include="Reports.net" Version="9.0.0.*" Condition="!Exists('$(ProgramFiles) (x86)\Pao@Office\Reports.net\Pao.Reports.dll')" />
     <Reference Include="Pao.Reports" Condition="Exists('$(ProgramFiles) (x86)\Pao@Office\Reports.net\Pao.Reports.dll')">
       <HintPath Condition="Exists('$(ProgramFiles) (x86)')">$(ProgramFiles) (x86)\Pao@Office\Reports.net\Pao.Reports.dll</HintPath>
     </Reference>

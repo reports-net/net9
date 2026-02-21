@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 //using System.Threading.Tasks;
@@ -236,7 +236,9 @@ namespace Sample
                 if (result == true)
                 {
 
-                    paoRep.SaveSVGFile(dlg.FileName); //SVGデータの保存
+                    // インラインSVG埋め込みHTML文字列を取得し、ファイルに保存
+                    string svgHtml = paoRep.GetSvg();
+                    System.IO.File.WriteAllText(dlg.FileName, svgHtml, System.Text.Encoding.UTF8);
 
                     if (MessageBox.Show(this, "ブラウザで表示しますか？\n表示する場合、SVGプラグインが必要です。", "SVG / SVGZ の表示", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                     {

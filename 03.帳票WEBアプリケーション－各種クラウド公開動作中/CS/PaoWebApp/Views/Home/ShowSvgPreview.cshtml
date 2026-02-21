@@ -1,0 +1,94 @@
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>SVG Preview</title>
+    <style>
+        body { margin: 0; font-family: sans-serif; }
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 8px;
+            background: #f0f0f0;
+            border-bottom: 1px solid #ccc;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .navbar button {
+            padding: 4px 12px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .navbar button:disabled {
+            cursor: default;
+            opacity: 0.4;
+        }
+        .navbar input[type="number"] {
+            width: 60px;
+            text-align: center;
+            font-size: 14px;
+        }
+        #svgContainer {
+            display: flex;
+            justify-content: center;
+            padding: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <button id="btnFirst" onclick="goFirst()" title="最初のページ">|&lt;</button>
+        <button id="btnPrev" onclick="goPrev()" title="前のページ">&lt;-</button>
+        <button id="btnNext" onclick="goNext()" title="次のページ">-&gt;</button>
+        <button id="btnLast" onclick="goLast()" title="最終ページ">&gt;|</button>
+        <span>表示ページ</span>
+        <input type="number" id="pageInput" min="1" value="1"
+               onkeydown="if(event.key==='Enter'){goPage(this.value);}" />
+        <span id="totalPages"></span>
+    </div>
+    <div id="svgContainer"></div>
+
+    <script>
+        var currentPage = 1;
+        var allPages = @ViewBag.AllPages;
+        var reportsKind = '@ViewBag.ReportsKind';
+
+        document.getElementById('totalPages').textContent = '/ ' + allPages;
+        document.getElementById('pageInput').max = allPages;
+
+        function updateButtons() {
+            document.getElementById('btnFirst').disabled = (currentPage <= 1);
+            document.getElementById('btnPrev').disabled = (currentPage <= 1);
+            document.getElementById('btnNext').disabled = (currentPage >= allPages);
+            document.getElementById('btnLast').disabled = (currentPage >= allPages);
+            document.getElementById('pageInput').value = currentPage;
+        }
+
+        function loadPage(page) {
+            if (page < 1) page = 1;
+            if (page > allPages) page = allPages;
+            currentPage = page;
+            updateButtons();
+            fetch('/svgtag/' + reportsKind + '?page=' + currentPage)
+                .then(function (response) { return response.text(); })
+                .then(function (svgText) {
+                    document.getElementById('svgContainer').innerHTML = svgText;
+                });
+        }
+
+        function goFirst() { loadPage(1); }
+        function goPrev() { loadPage(currentPage - 1); }
+        function goNext() { loadPage(currentPage + 1); }
+        function goLast() { loadPage(allPages); }
+        function goPage(p) { loadPage(parseInt(p) || 1); }
+
+        loadPage(1);
+    </script>
+</body>
+</html>

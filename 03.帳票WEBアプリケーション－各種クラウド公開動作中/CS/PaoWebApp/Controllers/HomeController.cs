@@ -40,16 +40,36 @@ namespace PaoWebApp.Controllers
             #endregion
             IReport paoRep = ReportCreator.GetReport();
             if (kind == "simple") MakeReports単純なサンプル(paoRep);
+            else if (kind == "simple10") MakeReports10の倍数(paoRep);
+            else if (kind == "zipcode") MakeReports郵便番号(paoRep);
             else if (kind == "mitsumori") MakeReports見積書(paoRep);
             else if (kind == "invoice") MakeReports請求書(paoRep);
+            else if (kind == "itemlist") MakeReports商品一覧(paoRep);
             string svgTag = paoRep.GetSvgTag(page);
+            Response.Headers["X-Total-Pages"] = paoRep.AllPages.ToString();
             return Content(svgTag, "image/svg+xml", System.Text.Encoding.UTF8);
         }
 
         [HttpPost]
         public IActionResult Index(string ReportsKind, string PdfAction, string OutputFormat)
         {
-            if (OutputFormat == "SVG")
+            if (OutputFormat == "SVGPreview")
+            {
+                #region 接続文字列
+                sqlcon = new SqlConnection("Server=tcp:fzxu46e9ck.database.windows.net,1433;Initial Catalog=Reports.net.Sample;Persist Security Info=False;User ID=AzureLab;Password=ayakaRk9504w;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
+                #endregion
+                IReport paoRep = ReportCreator.GetReport();
+                if (ReportsKind == "simple") MakeReports単純なサンプル(paoRep);
+                else if (ReportsKind == "simple10") MakeReports10の倍数(paoRep);
+                else if (ReportsKind == "zipcode") MakeReports郵便番号(paoRep);
+                else if (ReportsKind == "mitsumori") MakeReports見積書(paoRep);
+                else if (ReportsKind == "invoice") MakeReports請求書(paoRep);
+                else if (ReportsKind == "itemlist") MakeReports商品一覧(paoRep);
+                ViewBag.ReportsKind = ReportsKind;
+                ViewBag.AllPages = paoRep.AllPages;
+                return View("ShowSvgPreview");
+            }
+            else if (OutputFormat == "SVG")
             {
                 string svgHtml = GenerateSvgString(ReportsKind);
                 if (PdfAction.StartsWith("View"))

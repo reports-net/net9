@@ -42,6 +42,20 @@
         #svgContainer svg {
             box-shadow: 2px 3px 10px rgba(0,0,0,0.35), 0 0 0 1px rgba(0,0,0,0.08);
         }
+        .navbar .print-btn {
+            font-size: 18px;
+            padding: 4px 8px;
+            margin-left: 12px;
+            cursor: pointer;
+            background: none;
+            border: 1px solid #aaa;
+            border-radius: 4px;
+        }
+        .navbar .print-btn:hover { background: #ddd; }
+        @@media print {
+            .navbar { display: none !important; }
+            #svgContainer { padding: 0; }
+        }
     </style>
 </head>
 <body>
@@ -54,6 +68,8 @@
         <input type="number" id="pageInput" min="1" value="1"
                onkeydown="if(event.key==='Enter'){goPage(this.value);}" />
         <span id="totalPages"></span>
+        <button class="print-btn" onclick="printCurrentPage()" title="クイック印刷（このページを印刷）">&#128269;</button>
+        <button class="print-btn" onclick="printAllPages()" title="通常印刷（全ページを印刷）">&#128424;</button>
     </div>
     <div id="svgContainer"></div>
 
@@ -90,6 +106,39 @@
         function goNext() { loadPage(currentPage + 1); }
         function goLast() { loadPage(allPages); }
         function goPage(p) { loadPage(parseInt(p) || 1); }
+
+        // クイック印刷: 現在表示中のページだけ印刷
+        function printCurrentPage() {
+            window.print();
+        }
+
+        // 通常印刷: 全ページのSVGを新しいウィンドウで順次取得して印刷
+        function printAllPages() {
+            var w = window.open('', '_blank');
+            w.document.write('<html><head><title>印刷</title>');
+            w.document.write('<style>body{margin:0;} svg{page-break-after:always; display:block; margin:0 auto;} svg:last-child{page-break-after:auto;}</style>');
+            w.document.write('</head><body>');
+            w.document.write('<p id="progress" style="text-align:center;">読み込み中... 0 / ' + allPages + '</p>');
+            w.document.write('</body></html>');
+            w.document.close();
+
+            var svgs = [];
+            function fetchPage(page) {
+                fetch('/svgtag/' + reportsKind + '?page=' + page)
+                    .then(function(r) { return r.text(); })
+                    .then(function(svgText) {
+                        svgs.push(svgText);
+                        if (page < allPages) {
+                            w.document.getElementById('progress').textContent = '読み込み中... ' + page + ' / ' + allPages;
+                            fetchPage(page + 1);
+                        } else {
+                            w.document.body.innerHTML = svgs.join('');
+                            setTimeout(function() { w.print(); }, 300);
+                        }
+                    });
+            }
+            fetchPage(1);
+        }
 
         loadPage(1);
     </script>

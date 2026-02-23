@@ -21,4 +21,10 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
+app.Lifetime.ApplicationStarted.Register(() =>
+{
+    System.Diagnostics.Process.Start(
+        new System.Diagnostics.ProcessStartInfo("http://localhost:5000") { UseShellExecute = true });
+});
+
 app.Run();

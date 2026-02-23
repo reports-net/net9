@@ -49,7 +49,7 @@
     <!-- Reports.net 本体 -->
     <!-- インストールフォルダにDLLがなければNuGetパッケージから参照 -->
     <PackageReference Include="Reports.net.Azure" Version="9.0.0.*" Condition="!Exists('$(ProgramFiles) (x86)\Pao@Office\Reports.net\Pao.Reports.Azure.dll')" />
-    <Reference Include="Pao.Reports.Azure" Condition="Exists('$(ProgramFiles) (x86)\Pao@Office\Reports.net\Pao.Reports.Azure.dll')">
+    <Reference Include="Pao.Reports.Azure">
       <HintPath Condition="Exists('$(ProgramFiles) (x86)')">$(ProgramFiles) (x86)\Pao@Office\Reports.net\Pao.Reports.Azure.dll</HintPath>
     </Reference>
   </ItemGroup>

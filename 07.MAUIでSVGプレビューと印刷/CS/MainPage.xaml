@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SvgPreviewMaui.MainPage"
+             BackgroundColor="#F5F5F5">
+
+    <Grid RowDefinitions="Auto,*,Auto">
+
+        <!-- ツールバー -->
+        <Border Grid.Row="0" BackgroundColor="#2D2D30" Padding="8,6">
+            <HorizontalStackLayout Spacing="4" HorizontalOptions="Center" VerticalOptions="Center">
+
+                <!-- 帳票選択 -->
+                <Border BackgroundColor="#333337" Padding="4,0" StrokeShape="RoundRectangle 4">
+                    <Picker x:Name="pickerReport" WidthRequest="180"
+                            TextColor="#333337" FontSize="13"
+                            SelectedIndex="3">
+                        <Picker.ItemsSource>
+                            <x:Array Type="{x:Type x:String}">
+                                <x:String>単純なサンプル</x:String>
+                                <x:String>10の倍数</x:String>
+                                <x:String>郵便番号</x:String>
+                                <x:String>見積書</x:String>
+                                <x:String>請求書</x:String>
+                                <x:String>商品一覧</x:String>
+                            </x:Array>
+                        </Picker.ItemsSource>
+                    </Picker>
+                </Border>
+
+                <!-- 帳票生成 -->
+                <Button x:Name="btnGenerate" Text="&#x25B6; 帳票生成"
+                        Clicked="BtnGenerate_Clicked"
+                        BackgroundColor="#0E639C" TextColor="White"
+                        FontSize="13" Padding="14,6"
+                        CornerRadius="4"/>
+
+                <BoxView WidthRequest="1" HeightRequest="28" Color="#555" Margin="8,0"/>
+
+                <!-- ページナビゲーション -->
+                <Button x:Name="btnFirst" Text="&#x23EE;" Clicked="BtnFirst_Clicked"
+                        Style="{StaticResource ToolBtn}"/>
+                <Button x:Name="btnPrev" Text="&#x25C0;" Clicked="BtnPrev_Clicked"
+                        Style="{StaticResource ToolBtn}"/>
+
+                <Border BackgroundColor="#3E3E42" Padding="8,4" StrokeShape="RoundRectangle 4">
+                    <HorizontalStackLayout Spacing="4" VerticalOptions="Center">
+                        <Entry x:Name="txtPage" Text="0" WidthRequest="45"
+                               HorizontalTextAlignment="Center" FontSize="13"
+                               TextColor="White" BackgroundColor="#1E1E1E"
+                               Completed="TxtPage_Completed"/>
+                        <Label x:Name="lblTotal" Text=" / 0" TextColor="#CCC"
+                               FontSize="13" VerticalTextAlignment="Center"/>
+                    </HorizontalStackLayout>
+                </Border>
+
+                <Button x:Name="btnNext" Text="&#x25B6;" Clicked="BtnNext_Clicked"
+                        Style="{StaticResource ToolBtn}"/>
+                <Button x:Name="btnLast" Text="&#x23ED;" Clicked="BtnLast_Clicked"
+                        Style="{StaticResource ToolBtn}"/>
+
+                <BoxView WidthRequest="1" HeightRequest="28" Color="#555" Margin="8,0"/>
+
+                <!-- ズーム -->
+                <Button x:Name="btnZoomOut" Text="&#x2796;" Clicked="BtnZoomOut_Clicked"
+                        Style="{StaticResource ToolBtn}"/>
+                <Border BackgroundColor="#3E3E42" Padding="6,4" StrokeShape="RoundRectangle 4">
+                    <Label x:Name="lblZoom" Text="100%" TextColor="#CCC"
+                           FontSize="12" VerticalTextAlignment="Center"
+                           HorizontalTextAlignment="Center" WidthRequest="42"/>
+                </Border>
+                <Button x:Name="btnZoomIn" Text="&#x2795;" Clicked="BtnZoomIn_Clicked"
+                        Style="{StaticResource ToolBtn}"/>
+
+                <BoxView WidthRequest="1" HeightRequest="28" Color="#555" Margin="8,0"/>
+
+                <!-- 印刷 -->
+                <Button x:Name="btnPrintPage" Text="&#x1F5B6;" Clicked="BtnPrintPage_Clicked"
+                        Style="{StaticResource ToolBtn}" FontSize="18"/>
+                <Button x:Name="btnPrintAll" Text="&#x1F5B6;&#x5168;" Clicked="BtnPrintAll_Clicked"
+                        Style="{StaticResource ToolBtn}" FontSize="14"/>
+            </HorizontalStackLayout>
+        </Border>
+
+        <!-- WebView プレビュー -->
+        <WebView x:Name="webView" Grid.Row="1"/>
+
+        <!-- ステータスバー -->
+        <Border Grid.Row="2" BackgroundColor="#007ACC" Padding="10,4">
+            <Label x:Name="lblStatus" Text="帳票を生成してください"
+                   TextColor="White" FontSize="12"/>
+        </Border>
+    </Grid>
+
+    <ContentPage.Resources>
+        <Style x:Key="ToolBtn" TargetType="Button">
+            <Setter Property="BackgroundColor" Value="Transparent"/>
+            <Setter Property="TextColor" Value="White"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Padding" Value="8,4"/>
+            <Setter Property="MinimumWidthRequest" Value="36"/>
+            <Setter Property="MinimumHeightRequest" Value="32"/>
+            <Setter Property="CornerRadius" Value="4"/>
+        </Style>
+    </ContentPage.Resources>
+</ContentPage>

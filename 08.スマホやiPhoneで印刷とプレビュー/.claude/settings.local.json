@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(du:*)",
+      "Bash(ls:*)",
+      "Bash(cmd.exe:*)",
+      "Bash(find:*)"
+    ]
+  }
+}

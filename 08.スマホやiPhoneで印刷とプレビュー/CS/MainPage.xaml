@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SvgPreviewMobile.MainPage"
+             BackgroundColor="#F5F5F5">
+
+    <Grid RowDefinitions="Auto,Auto,*">
+
+        <!-- ツールバー -->
+        <Border Grid.Row="0" BackgroundColor="#2D2D30" Padding="8,6">
+            <HorizontalStackLayout Spacing="6" HorizontalOptions="Center" VerticalOptions="Center">
+
+                <!-- SVG / PDF 切替トグル -->
+                <Border BackgroundColor="#1E1E1E" Padding="2" StrokeShape="RoundRectangle 4"
+                        StrokeThickness="0">
+                    <HorizontalStackLayout Spacing="2">
+                        <Button x:Name="btnSvg" Text="SVG"
+                                BackgroundColor="#0E639C" TextColor="White"
+                                FontSize="12" Padding="10,4" CornerRadius="3"
+                                Clicked="BtnSvg_Clicked" HeightRequest="28"/>
+                        <Button x:Name="btnPdf" Text="PDF"
+                                BackgroundColor="#3E3E42" TextColor="#999"
+                                FontSize="12" Padding="10,4" CornerRadius="3"
+                                Clicked="BtnPdf_Clicked" HeightRequest="28"/>
+                    </HorizontalStackLayout>
+                </Border>
+
+                <!-- 帳票選択 -->
+                <Picker x:Name="pickerReport" WidthRequest="120"
+                        FontSize="13">
+                    <Picker.TextColor>
+                        <OnPlatform x:TypeArguments="Color">
+                            <On Platform="iOS" Value="Black"/>
+                            <On Platform="Android,WinUI" Value="White"/>
+                        </OnPlatform>
+                    </Picker.TextColor>
+                    <Picker.ItemsSource>
+                        <x:Array Type="{x:Type x:String}">
+                            <x:String>単純なサンプル</x:String>
+                            <x:String>10の倍数</x:String>
+                            <x:String>郵便番号</x:String>
+                            <x:String>見積書</x:String>
+                            <x:String>請求書</x:String>
+                            <x:String>商品一覧</x:String>
+                        </x:Array>
+                    </Picker.ItemsSource>
+                </Picker>
+
+                <!-- 帳票生成 -->
+                <Button x:Name="btnGenerate" Text="&#x25B6; 生成"
+                        Clicked="BtnGenerate_Clicked"
+                        BackgroundColor="#0E639C" TextColor="White"
+                        FontSize="13" Padding="10,5"
+                        CornerRadius="4"/>
+
+                <!-- 印刷 -->
+                <Button x:Name="btnPrint" Text="印刷"
+                        Clicked="BtnPrint_Clicked"
+                        BackgroundColor="#4A4A4E" TextColor="White"
+                        FontSize="13" Padding="10,5"
+                        CornerRadius="4" IsEnabled="False"/>
+
+            </HorizontalStackLayout>
+        </Border>
+
+        <!-- ステータスバー -->
+        <Border Grid.Row="1" BackgroundColor="#007ACC" Padding="10,4">
+            <Label x:Name="lblStatus" Text="帳票を生成してください"
+                   TextColor="White" FontSize="12"/>
+        </Border>
+
+        <!-- WebView プレビュー -->
+        <WebView x:Name="webView" Grid.Row="2"/>
+
+    </Grid>
+
+</ContentPage>

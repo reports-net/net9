@@ -1,0 +1,39 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>net9.0-windows10.0.19041.0</TargetFrameworks>
+    <OutputType>Exe</OutputType>
+    <UseMaui>true</UseMaui>
+    <SingleProject>true</SingleProject>
+    <RootNamespace>SvgPreviewMaui</RootNamespace>
+    <ApplicationTitle>SVG プレビュー (MAUI)</ApplicationTitle>
+    <ApplicationId>com.pao.svgpreview.maui</ApplicationId>
+    <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
+    <ApplicationVersion>1</ApplicationVersion>
+    <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <WindowsPackageType>None</WindowsPackageType>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- MAUI -->
+    <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.*" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <!-- Reports.net 本体 -->
+    <!-- インストールフォルダにDLLがなければNuGetパッケージから参照 -->
+    <PackageReference Include="Reports.net.Linux" Version="9.0.0.*" Condition="!Exists('$(ProgramFiles) (x86)\Pao@Office\Reports.net\Pao.Reports.Azure.dll')" />
+    <Reference Include="Pao.Reports.Linux">
+      <HintPath Condition="Exists('$(ProgramFiles) (x86)')">$(ProgramFiles) (x86)\Pao@Office\Reports.net\Pao.Reports.Linux.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Excel OleDb アクセス -->
+    <PackageReference Include="System.Data.OleDb" Version="8.0.*" />
+    <!-- Pao.Reports.dll が依存する GDI+ (Windows専用) -->
+    <PackageReference Include="System.Drawing.Common" Version="8.0.*" />
+    <!-- ライセンスチェック用 開発環境のみに必要　運用環境への配布時には不要-->
+    <PackageReference Include="System.Management" Version="9.0.0" />
+  </ItemGroup>
+</Project>

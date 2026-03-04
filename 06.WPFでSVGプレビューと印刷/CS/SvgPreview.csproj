@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net9.0-windows</TargetFramework>
+    <OutputType>WinExe</OutputType>
+    <UseWPF>true</UseWPF>
+    <RootNamespace>SvgPreview</RootNamespace>
+    <AssemblyName>SvgPreview</AssemblyName>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- Reports.net 本体 -->
+    <!-- インストールフォルダにDLLがなければNuGetパッケージから参照 -->
+    <PackageReference Include="Reports.net" Version="9.0.0.*" Condition="!Exists('$(ProgramFiles) (x86)\Pao@Office\Reports.net\Pao.Reports.dll')" />
+    <Reference Include="Pao.Reports">
+      <HintPath Condition="Exists('$(ProgramFiles) (x86)')">$(ProgramFiles) (x86)\Pao@Office\Reports.net\Pao.Reports.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <!-- WebView2 -->
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.*" />
+  </ItemGroup>
+  <ItemGroup>
+    <!-- Excel OleDb アクセス -->
+    <PackageReference Include="System.Data.OleDb" Version="8.0.*" />
+    <!-- Pao.Reports.dll が依存する GDI+ -->
+    <PackageReference Include="System.Drawing.Common" Version="8.0.*" />
+    <!-- ライセンスチェック用 開発環境のみに必要　運用環境への配布時には不要-->
+    <PackageReference Include="System.Management" Version="9.0.0" />
+  </ItemGroup>
+</Project>
